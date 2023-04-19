@@ -19,6 +19,7 @@ export class News extends Component {
 
 
 
+
   async componentDidMount() {
     let url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=e4ce2a9a1ca24c1196e4391f244db8e6"
     try {
@@ -42,7 +43,7 @@ export class News extends Component {
 
             return <div className='col-md-4' key={element.url}>
               <NewsItem title={element.title ? element.title.slice(0, 45) : ""} description={element.description ? element.description.slice(0, 88) : ""}
-                imageUrl={element.urltoToImage} newsUrl={element.url} />
+                imageUrl={element.urlToImage} newsUrl={element.url} />
             </div>
           })}
 
