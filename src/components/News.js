@@ -11,7 +11,8 @@ export class News extends Component {
     this.state = {
 
       articles: [],
-      loading: false
+      loading: false,
+      page: 1
 
     }
 
@@ -21,18 +22,62 @@ export class News extends Component {
 
 
   async componentDidMount() {
-    let url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=e4ce2a9a1ca24c1196e4391f244db8e6"
+    let url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=e4ce2a9a1ca24c1196e4391f244db8e6&page=1&pageSize=20";
     try {
-      const res = await fetch(url);
-      const data = await res.json();
+      let res = await fetch(url);
+      let data = await res.json();
       this.setState({
-        articles: data.articles
+        articles: data.articles,
+        totalResults: data.totalResults
       });
     }
     catch (e) {
       console.log("something is not working");
     }
   }
+
+  handleNextClick = async () => {
+
+    if (this.state.page + 1 > Math.ceil(this.state.totalResults / 20)) {
+      let flag = 1;
+
+    }
+
+    else {
+
+      let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=e4ce2a9a1ca24c1196e4391f244db8e6&page=${this.state.page + 1}&pageSize=20`;
+
+      let res = await fetch(url);
+      let data = await res.json();
+
+
+      this.setState({
+        page: this.state.page + 1,
+        articles: data.articles
+      })
+
+    }
+
+  }
+
+
+  handlePreviousClick = async () => {
+
+
+    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=e4ce2a9a1ca24c1196e4391f244db8e6&page=${this.state.page - 1}&pageSize=20`;
+
+    let res = await fetch(url);
+    let data = await res.json();
+
+
+
+    this.setState({
+      page: this.state.page - 1,
+      articles: data.articles
+    })
+  }
+
+
 
   render() {
     return (
@@ -50,7 +95,10 @@ export class News extends Component {
 
 
         </div>
-
+        <div className="container d-flex justify-content-between">
+          <button disabled={this.state.page >= 1} type="button" className="btn btn-primary" onClick={this.handlePreviousClick}>&larr; Previous</button>
+          <button  type="button" className="btn btn-primary" onClick={this.handleNextClick}>Next&rarr;</button>
+        </div>
       </div>
     )
   }
