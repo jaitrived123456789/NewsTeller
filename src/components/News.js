@@ -1,10 +1,23 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
 import Spinner from './Spinner';
+import PropTypes from 'prop-types'
+
 
 export class News extends Component {
 
+  static defaultProps = {
+    country: 'in',
+    pageSize: 8,
 
+    category: 'general'
+  } 
+
+  static propTypes = {
+    country: PropTypes.string,
+    paseSize: PropTypes.number,
+    category: PropTypes.string
+  }
   constructor() {
     super();
     console.log("This is constructor")
@@ -23,7 +36,7 @@ export class News extends Component {
 
 
   async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=e4ce2a9a1ca24c1196e4391f244db8e6&page=1&pageSize=${this.props.pageSize}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=e4ce2a9a1ca24c1196e4391f244db8e6&page=1&pageSize=${this.props.pageSize}`;
     try {
       this.setState({loading:true});
 
@@ -43,7 +56,7 @@ export class News extends Component {
   handleNextClick = async () => {
 
     if (!(this.state.page + 1 > Math.ceil(this.state.totalResults /this.props.paseSize))) {
-      let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=e4ce2a9a1ca24c1196e4391f244db8e6&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=e4ce2a9a1ca24c1196e4391f244db8e6&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
       this.setState({loading:true});
       let res = await fetch(url);
       let data = await res.json();
@@ -63,7 +76,7 @@ export class News extends Component {
   handlePreviousClick = async () => {
 
 
-    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=e4ce2a9a1ca24c1196e4391f244db8e6&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=e4ce2a9a1ca24c1196e4391f244db8e6&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
     this.setState({loading:true});
 
     let res = await fetch(url);
@@ -83,7 +96,7 @@ export class News extends Component {
   render() {
     return (
       <div className='container my-3'>
-        < h1 className="text-center ">
+        < h1 className="text-center " style={{margin:'40px 0px'}}>
         NewsTeller - Top Headlines
         </h1>
         {this.state.loading && <Spinner/>}
