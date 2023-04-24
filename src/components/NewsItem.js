@@ -10,8 +10,9 @@ export class NewsItem extends Component {
 
       <div className='card deck my-3 mx-3'>
         <div className="card gap-6">
-          <span className="position-absolute top-0 translate-middle badge rounded-pill bg-primary" style={{ left: '90%', zIndex: '1', }}>{source}</span>
-
+          <div style={{display:'flex', justifyContent: 'flex-end', position: 'absolute', right:'0'}}>
+          <span className=" badge rounded-pill bg-primary" >{source}</span>
+          </div>
           <img src={!imageUrl ? "http://www.elegalmetrology.jharkhand.gov.in/japnet/images/news.jpg" : imageUrl} className="card-img-top" alt="..." />
           <div className="card-body">
             <h5 className="card-title">{title}...</h5>

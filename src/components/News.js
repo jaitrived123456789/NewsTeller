@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
+
 export class News extends Component {
 
   static defaultProps = {
@@ -63,11 +64,14 @@ export class News extends Component {
   }
 
   async updateNews() {
+    this.props.setProgress(10);
     const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=e4ce2a9a1ca24c1196e4391f244db8e6&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({ loading: true });
 
     let res = await fetch(url);
     let data = await res.json();
+    this.props.setProgress(50);
+
 
 
 
@@ -76,6 +80,9 @@ export class News extends Component {
       articles: data.articles,
       loading: false
     })
+
+    this.props.setProgress(100);
+
   }
 
 
