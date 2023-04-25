@@ -16,7 +16,7 @@ const [totalResults , setTotalResults] = useState(0)
 // document.title = `${this.capitalize(props.category)}-NewsTeller`
 
 
-  capitalize = (word) => {
+  const capitalize = (word) => {
     return word[0].toUpperCase() + word.slice(1).toLowerCase();
   }
 
@@ -103,7 +103,7 @@ const [totalResults , setTotalResults] = useState(0)
   //   // })
   // }
 
-  fetchMoreData = async() => { 
+  const fetchMoreData = async() => { 
         this.setState({
         page: this.state.page + 1
       });
@@ -124,7 +124,7 @@ const [totalResults , setTotalResults] = useState(0)
     
   };
 
-  render() {
+  
     return (
       <>
         < h1 className="text-center " style={{ margin: '40px 0px' }}>
@@ -164,7 +164,7 @@ const [totalResults , setTotalResults] = useState(0)
          
       </>
     )
-  }
+  
 }
 
 
